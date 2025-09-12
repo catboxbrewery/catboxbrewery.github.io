@@ -21,13 +21,9 @@ The theme was discovered on the [Jekyll Themes][themes] website.
 $ bundle exec jekyll serve --config _config.yml,_config_dev.yml --livereload
 ```
 
-## Creating Gallery Thumbnails
+## Content Migration
 
-Prerequisite: imagemagick
-
-```bash
-$ convert input.jpg -thumbnail
-```
+There are additional tools in a separate repository to support the migration of content. They can be found in the [catboxbrewery-scraper][scraper] repository.
 
 ---
 
@@ -37,3 +33,4 @@ $ convert input.jpg -thumbnail
 [repo]: https://github.com/Phlow/feeling-responsive/
 [sample]: http://phlow.github.io/feeling-responsive/
 [documentation]: http://phlow.github.io/feeling-responsive/documentation/
+[scraper]: https://github.com/catboxbrewery/catboxbrewery-scraper
