@@ -1,0 +1,59 @@
+{% comment %}
+*
+*   Possible parameter for this loop:
+*
+*    › entries
+*    › offset
+*    › category
+*    › tag
+*
+*   Example for Category: {% include list-posts entries='3' offset='1' category='design' %}
+*
+*   Example for Tag: {% include list-posts entries='5' tag='terminal' %}
+*
+*
+*   This loop works like this:
+*
+*   1. First we check if there was given a category for filtering › if include.categories == NULL
+*   2. If no category is given for filtering do a general loop.
+*   3. If a category/tag was given, assign category/tag to the variable category/tag › assign category = include.categories
+*
+{% endcomment %}
+
+{% assign category = include.category %}
+{% assign tag = include.tag %}
+
+{% for post in site.categories.[category] reversed:include.order limit:include.entries offset:include.offset %}
+<div class="row t30">
+	<div class="medium-12 columns">
+		<article itemscope itemtype="http://schema.org/Article">
+			<header>
+				<div itemprop="name">
+					{% if post.subheadline %}<p class="subheadline">{{ post.subheadline }}</p>{% endif %}
+					<h1>{{ post.title }}</h1>
+				</div>
+			</header>
+
+			{% if post.teaser %}
+			<p class="teaser" itemprop="description">
+				{{ post.teaser }}
+			</p>
+			{% endif %}
+
+			<div itemprop="articleSection">
+			{{ post.content }}
+			</div>
+
+			{% if post.show_meta == true %}
+			{% include _meta_information.html %}
+			{% endif %}
+
+			{% if post.comments == true %}
+			{% include _comments.html %}
+			{% endif %}
+
+		</article>
+	</div>
+</div>
+<hr/>
+{% endfor %}

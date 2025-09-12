@@ -1,61 +1,96 @@
 ---
 layout: page
-title: "About"
-subheadline: "Why another Jekyll Theme?"
-teaser: "Since years I am programming and designing websites. I love to work with open source tools and learn via code from others. This time I want to try to give something back..."
+title: "About the Brewery"
+author: sisyphuscafe
+subheadline: "Whatever happened to WordPress?"
+teaser: "This site represents a simpler approach to building a website, using Jekyll, an open source template and hosted on GitHub Pages."
 permalink: "/info/"
+show_meta: true
+date: 2025-08-23
+categories:
+    - information
 header:
-    image_fullwidth: "header_drop.jpg"
+    image_fullwidth: "unsplash_9.jpg"
 ---
-...and learn at the same time.
 
-*Feeling Responsive* is my first theme which I let into the world. It's built on work and knowledge of others. While I am still designing it, you read about whats behind this theme in the – *hopefully* – near future.
+The goal was to move away from an expensive web host and a decidedly bloated CMS platform ([WordPress][wordpress]). Since this
+site is, for the most part, static, the richness of a CMS is helpful only in the context of the initial build.
+[GitHub Pages][pages] offers an ideal platform to build and maintain a site, especially if the content doesn't change all that often. [*Feeling Responsive*][feeling-responsive] is a template built by [Moritz Sauer][phlow].
+
+## Process
+
+The process to migrate the site was fairly straightforward. First, stand up a new jekyll site locally, download and install the shiny new template, and migrate the content. The content migration was the most arduous, but my goal was to automate the migration of each travel log individually.
+
+## Content Migration
+
+Since the original WordPress site was not overly complex, and followed a uniform structure, it was a relatively simple matter to write a recursive scraper to visit each travel log individually, follow the links to the main articles, and then scrape and convert the content and download the images.
+
+I wrote a separate utility to create thumbnail images for the image galleries after the fact.
+
+The scraper and thumbnail generator were both written in [Python][python], using several libraries beyond the obvious:
+
+* [plac][plac]: A simple library to facilitate command line parsing
+* [requests][requests]: A simple HTTP library
+* [BeautifulSoup][soup]: A library for pulling data out of HTML and XML files
+* [markdownify][markdownify]: A library for converting HTML to markdown
+* [PyYAML][yaml]: A YAML parser and emitter
+* [pillow][pillow]: A PIL Fork providing extensive image processing capabilities
+
+### scraper
+
+```bash
+$ python scraper/main.py -h
+usage: main.py [-h] [-v] [-i] [-b travelog] [-d cbb] [-s None] url category title
+
+Scrape the given URL and generate output to support website migration from WordPress to jekyll.
+
+positional arguments:
+  url                  The URL to fetch/parse
+  category             The blog category
+  title                The blog title
+
+options:
+  -h, --help           show this help message and exit
+  -v, --verify         Verify SSL certificate
+  -i, --images         Download images
+  -b, --blog travelog  The blog name
+  -d, --dest cbb       The destination image folder, rooted in /images directory within jekyll site
+  -s, --start None     The publication date for first article, derived from post if not specified
+```
+
+### thumbgen
+
+```bash
+$ python scraper/thumbgen.py -h
+usage: thumbgen.py [-h] [-x 200] [-y 150] source [destination]
+
+Generate a thumbnail image of a specific size from the given source image.
+
+positional arguments:
+  source       The source image
+  destination  The destination image, derived if not specified
+
+options:
+  -h, --help   show this help message and exit
+  -x, --x 200  The destination image width
+  -y, --y 150  The destination image height
+```
 
 
-## Features
+Statistics:
 
-* [Responsive Gallery][8], [Videos][9], [Grid][10], [Typography][11],...
-* 100% GitHub Pages friendly
-* Easy editable navigation, footer and social media links
-* Language Ready – just translate one file.
-* Lots of possibilities to customize it to your needs
-* Lots of different headers
-* Various post formats to let your content shine
-* Uses Jekyll 3.0
-* Multiple possibilities to use images in different ways
-* Fine typography
-* Play Video and Audio with [Mediaelement.js][12]
+* Individual Images (including thumbnails): 913
+* Individual Posts: 55
 
+---
 
-
-## I got inspired by...
-
-[Michael Rose][1] and his fabulous [themes for jekyll][2]. Authors of [A List Apart][4] and [Smashing Magazine][5] since 2002. [GitHub][6] and how they built such a habitat for cooperation worldwide. [Automattic][3] and how they built a fantastic community around WordPress. And many, many more...
-
-Please make *Feeling Responsive* yours and if you like it, please link back to my homebase <a href="http://phlow.de/">Phlow</a>. That would be awesome.
-
-#### Since then, fork it!
-
-Yours sincerelly, [Moritz »mo.« Sauer][7]
-
-
- [1]: http://mademistakes.com/about/
- [2]: http://mademistakes.com/work/jekyll-themes/
- [3]: http://automattic.com/
- [4]: http://alistapart.com/
- [5]: http://www.smashingmagazine.com/
- [6]: https://github.com/
- [7]: http://sauer.io
- [8]: {{ site.url }}/design/gallery/
- [9]: {{ site.url }}/design/video/
- [10]: {{ site.url }}/design/grid/
- [11]: {{ site.url }}/design/typography/
- [12]: {{ site.url }}/design/mediaelement_js/
- [13]: #
- [14]: #
- [15]: #
- [16]: #
- [17]: #
- [18]: #
- [19]: #
- [20]: #
+[pages]: https://docs.github.com/en/pages
+[wordpress]: https://wordpress.org
+[phlow]: https://github.com/phlow
+[feeling-responsive]: https://github.com/phlow/feeling-responsive
+[python]: https://python.org
+[plac]: https://pypi.org/project/plac/
+[requests]: https://requests.readthedocs.io/en/latest/
+[soup]: https://beautiful-soup-4.readthedocs.io/en/latest/
+[markdownify]: https://pypi.org/project/markdownify/
+[pillow]: https://pillow.readthedocs.io/en/stable/index.html
