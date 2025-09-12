@@ -14,7 +14,7 @@ Twitter: {{ author.twitter }}{% endif %}
 
 /* THANKS */
 
-Name: Moritz »mo.« Sauer
+Name: Moritz >mo.< Sauer
 Role: Creator of the Theme
 Site: http://mo.phlow.de/
 Twitter: @phlow
