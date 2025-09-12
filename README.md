@@ -26,7 +26,9 @@ $ bundle exec jekyll serve --config _config.yml,_config_dev.yml --livereload
 Prerequisite: imagemagick
 
 ```bash
-$ convert input.jpg -thumbnail 
+$ convert input.jpg -thumbnail
+```
+
 ---
 
 [jekyll]: https://jekyllrb.com/
